@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint default-activation="eager"
+    xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+    xmlns:blueprint-schema-cxf="http://camel.apache.org/schema/cxf"
+    xmlns:camel="http://camel.apache.org/schema/blueprint"
+    xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.3.0"
+    xmlns:ctx="http://www.springframework.org/schema/context"
+    xmlns:cxf="http://camel.apache.org/schema/blueprint/cxf"
+    xmlns:cxf-core="http://cxf.apache.org/blueprint/core"
+    xmlns:cxf-security="http://cxf.apache.org/configuration/security"
+    xmlns:enc="http://karaf.apache.org/xmlns/jasypt/v1.0.0"
+    xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0"   
+    xmlns:http="http://cxf.apache.org/transports/http/configuration"
+    xmlns:httpn="http://cxf.apache.org/transports/http-netty-server/configuration"
+    xmlns:httpu="http://cxf.apache.org/transports/http-undertow/configuration"
+    xmlns:jaxrs="http://cxf.apache.org/blueprint/jaxrs"
+    xmlns:jaxws="http://cxf.apache.org/blueprint/jaxws"
+    xmlns:osgi="http://www.springframework.org/schema/osgi"
+    xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
+    xmlns:sec="http://cxf.apache.org/configuration/security"
+    xmlns:spring-beans="http://www.springframework.org/schema/beans"
+    xmlns:spring-camel-cxf="http://camel.apache.org/schema/cxf"
+    xmlns:spring-security="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="
+    http://www.osgi.org/xmlns/blueprint/v1.0.0 https://osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+    http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+    http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd
+    http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.3.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://camel.apache.org/schema/blueprint/cxf http://camel.apache.org/schema/cxf/camel-cxf-blueprint.xsd
+    http://cxf.apache.org/blueprint/core http://cxf.apache.org/schemas/blueprint/core.xsd              
+    http://karaf.apache.org/xmlns/jasypt/v1.0.0 http://karaf.apache.org/xmlns/jasypt/v1.0.0
+    http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0 http://aries.apache.org/schemas/blueprint-ext/blueprint-ext.xsd 
+    http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd 
+    http://cxf.apache.org/transports/http-netty-server/configuration http://cxf.apache.org/schemas/configuration/http-netty-server.xsd
+    http://cxf.apache.org/transports/http-undertow/configuration http://cxf.apache.org/schemas/configuration/http-undertow.xsd
+    http://cxf.apache.org/blueprint/jaxrs http://cxf.apache.org/schemas/blueprint/jaxrs.xsd            
+    http://cxf.apache.org/blueprint/jaxws http://cxf.apache.org/schemas/blueprint/jaxws.xsd
+    http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd          
+    http://www.springframework.org/schema/osgi-compendium http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd 
+    http://cxf.apache.org/configuration/security http://cxf.apache.org/schemas/configuration/security.xsd          
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd             
+    http://camel.apache.org/schema/cxf https://camel.apache.org/schema/cxf/camel-cxf.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+    <!-- ==================================================== -->
+    <!-- ==================================================== -->
+    <!-- Allow the use of system properties -->
+    <ext:property-placeholder placeholder-prefix="$[" placeholder-suffix="]"/>
+    <cm:property-placeholder id="cm-placeholder"
+        persistent-id="override-properties" update-strategy="reload">
+        <cm:default-properties>
+       		<cm:property name="keyStore.file" value="/etc/pki/ca-trust/extracted/java/cacerts"/>
+			<cm:property name="keyStore.password" value="changeit"/>
+			<cm:property name="keyStore.type" value="JKS"/>
+			<cm:property name="keyStore.certAlias" value="selfsign"/>
+            <cm:property name="https.servicePort" value="8447"/>
+            <cm:property name="https.serviceHost" value="https://0.0.0.0"/>
+        </cm:default-properties>
+    </cm:property-placeholder>
+    <reference id="configAdmin" interface="org.osgi.service.cm.ConfigurationAdmin"/>
+
+    <!-- =================================== -->
+    <!-- INTERCEPTOR                         -->
+    <!-- =================================== -->
+    <!-- http://stackoverflow.com/questions/8065737/how-to-log-apache-cxf-soap-request-and-soap-response-using-log4j -->
+    <bean class="org.apache.cxf.feature.LoggingFeature" id="loggingFeature"/>
+    <bean class="org.apache.cxf.interceptor.LoggingInInterceptor" id="loggingInInterceptor">
+        <property name="prettyLogging" value="true"/>
+    </bean>
+    <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor" id="loggingOutInterceptor">
+        <property name="prettyLogging" value="true"/>
+    </bean>
+    <!-- =================================== -->
+    <!-- PROVIDERS                           -->
+    <!-- =================================== -->
+    <!--
+    <bean class="org.apache.cxf.jaxrs.provider.json.JSONProvider" id="jsonProviderJaxrs">
+        <property name="dropRootElement" value="true"/>
+        <property name="ignoreNamespaces" value="true"/>
+        <property name="supportUnwrapped" value="true"/>
+    </bean>
+    -->
+    <bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" id="jacksonJsonProvider">
+        <!-- <property name="mapper" ref="myJsonMapper" /> -->
+    </bean>
+    <bean class="com.fasterxml.jackson.jaxrs.xml.JacksonJaxbXMLProvider" id="jacksonJaxbXMLProvider"/>
+    <bean class="org.apache.cxf.jaxrs.provider.JAXBElementProvider" id="jaxbElementProvider">
+		<property name="singleJaxbContext" value="true" />
+	</bean>
+    <bean class="org.apache.cxf.jaxrs.model.wadl.WadlGenerator" id="wadlGeneratorProvider">
+        <property name="linkJsonToXmlSchema" value="true"/>
+        <property name="addResourceAndMethodIds" value="true" />
+    </bean>
+	<bean id="multipartProvider" class="org.apache.cxf.jaxrs.provider.MultipartProvider" />
+    <bean id="crossOriginResourceSharingFilterProvider" class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter">
+		<property name="allowCredentials" value="false" />
+	</bean>
+<!-- 	<bean id="swaggerSerializersProvider" class="io.swagger.jaxrs.listing.SwaggerSerializers" /> -->
+    <!-- =================== -->
+    <!-- HTTPS -->
+    <!-- =================== -->
+    <!-- http://wiki.harvard.edu/confluence/display/ATSESB/Example+3%3A+Calling+a+Web+Service+with+SSL+Client+Certificate -->
+    <!-- Set up an SSL conduit. The asterix in the name attribute below maps
+    this conduit to every endpoint (all conduit names must end with ".http-conduit"). -->
+    <http:conduit name="*.http-conduit">
+        <http:tlsClientParameters disableCNCheck="true" secureSocketProtocol="TLS">
+            <sec:keyManagers keyPassword="${keyStore.password}">
+                <sec:keyStore file="${keyStore.file}"
+                    password="${keyStore.password}" type="${keyStore.type}"/>
+            </sec:keyManagers>
+            <sec:trustManagers>
+                <sec:keyStore file="${keyStore.file}"
+                    password="${keyStore.password}" type="${keyStore.type}"/>
+            </sec:trustManagers>
+        </http:tlsClientParameters>
+        <http:client AutoRedirect="true" Connection="Keep-Alive"/>
+    </http:conduit>
+    <!-- =================== -->
+    <!-- ActiveMQ -->
+    <!-- =================== -->
+
+    <!-- =================== -->
+    <!-- CXF -->
+    <!-- =================== -->
+    <cxf-core:bus>
+        <cxf-core:features>
+            <cxf-core:logging/>
+        </cxf-core:features>
+        <cxf-core:properties>
+            <entry key="schema-validation-enabled" value="true"/>
+            <entry key="mtom-enabled" value="true"/>
+            <entry key="skip.default.json.provider.registration" value="true"/>
+        </cxf-core:properties>
+        <cxf-core:outInterceptors>
+            <!--
+            <bean class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor">
+                <argument ref="wsSecurityConfig" />
+            </bean>
+            -->
+        </cxf-core:outInterceptors>
+    </cxf-core:bus>
+    <!-- UNDERTOW -->
+    <httpu:engine-factory bus="cxf" id="ssl-enable-httpu">       
+        <httpu:engine port="${https.servicePort}">         
+            <httpu:tlsServerParameters>
+                <sec:keyManagers keyPassword="${keyStore.password}">
+                    <sec:keyStore file="${keyStore.file}"
+                        password="${keyStore.password}" type="${keyStore.type}"/>
+                </sec:keyManagers>
+                <sec:cipherSuitesFilter>
+                    <sec:include>.*_EXPORT_.*</sec:include>
+                    <sec:include>.*_EXPORT1024_.*</sec:include>
+                    <sec:include>.*_WITH_DES_.*</sec:include>
+                    <sec:include>.*_WITH_AES_.*</sec:include>
+                    <sec:include>.*_WITH_NULL_.*</sec:include>
+                    <sec:exclude>.*_DH_anon_.*</sec:exclude>
+                </sec:cipherSuitesFilter>
+                <sec:clientAuthentication required="false" want="false"/>
+                <sec:certAlias>${keyStore.certAlias}</sec:certAlias>
+            </httpu:tlsServerParameters>
+            <!--  <httpu:tlsServerParametersRef id="secureHttpu"/> -->
+            <httpu:threadingParameters maxThreads="15" minThreads="5"/>
+            <!-- <httpu:sessionSupport>true</httpu:sessionSupport> -->
+        </httpu:engine>
+    </httpu:engine-factory>
+
+    <!-- =========== -->
+    <!-- SETUP UNDERTOW -->
+    <!-- =========== -->
+    <!-- http://gist.github.com/osmman/58f47d3f041cbd93058c23469bbb0d56 -->
+    <bean class="org.apache.camel.component.undertow.UndertowComponent" id="undertow">
+        <property name="hostOptions" ref="undertowHostOptions"/>
+        <property name="sslContextParameters" ref="sslContextParametersUndertow"/>
+    </bean>
+    <bean
+        class="org.apache.camel.component.undertow.UndertowHostOptions" id="undertowHostOptions">
+        <property name="http2Enabled" value="true"/>
+    </bean>
+    
+    <sslContextParameters id="sslContextParametersUndertow" xmlns="http://camel.apache.org/schema/blueprint">
+        <secureSocketProtocols>          
+            <secureSocketProtocol>SSLv3</secureSocketProtocol>
+            <secureSocketProtocol>TLSv1</secureSocketProtocol>
+            <secureSocketProtocol>TLSv1.1</secureSocketProtocol>
+            <secureSocketProtocol>TLSv1.2</secureSocketProtocol>
+        </secureSocketProtocols>
+        <keyManagers keyPassword="${keyStore.password}">
+            <keyStore password="${keyStore.password}"
+                resource="${keyStore.file}" type="${keyStore.type}"/>
+        </keyManagers>
+        <trustManagers>
+            <keyStore password="${keyStore.password}"
+                resource="${keyStore.file}" type="${keyStore.type}"/>
+        </trustManagers>
+    </sslContextParameters>
+    
+
+    <!-- ENDPOINT -->
+    <bean class="bug.test.endpoint.TestEndpoint" id="testServiceEndpointID"/> 
+	
+    <!-- SOAP -->
+    <!-- 
+    <cxf:cxfEndpoint
+        address="${https.serviceHost}:${https.servicePort}/cxf/my/soap"
+        id="rsServerTestServiceSOAPEndpointSSL"
+        loggingFeatureEnabled="true" loggingSizeLimit="20" serviceClass="bug.test.endpoint.TestEndpoint">
+        <cxf:properties>
+            <entry key="schema-validation-enabled" value="true"/>
+            <entry key="attachment-directory" value="/tmp/"/>
+            <entry key="attachment-memory-threshold" value="4000000"/>           
+            <entry key="ws-security.callback-handler">
+                <ref component-id="clientPasswordHandlerID"/>
+            </entry>          
+            <entry key="ws-security.ut.validator">
+                <ref component-id="clientPasswordHandlerID"/>
+            </entry>
+            <entry key="ws-security.validate.token" value="false"/>
+            <entry key="mtom-enabled" value="true"/>
+        </cxf:properties>
+        <cxf:inInterceptors>
+            <ref component-id="loggingInInterceptor"/>          
+        </cxf:inInterceptors>
+        <cxf:outInterceptors>
+            <ref component-id="loggingOutInterceptor"/>
+        </cxf:outInterceptors>
+    </cxf:cxfEndpoint>
+    -->
+    
+    <!-- REST -->
+    <cxf:rsServer
+        address="${https.serviceHost}:${https.servicePort}/cxf/my/rest"
+        id="rsServerTestServiceEndpointSSL"
+        loggingFeatureEnabled="true" loggingSizeLimit="20"
+        serviceClass="bug.test.endpoint.TestEndpoint" staticSubresourceResolution="true">
+        <cxf:serviceBeans>
+            <ref component-id="testServiceEndpointID"/>
+        </cxf:serviceBeans>
+        <cxf:inInterceptors>
+            <ref component-id="loggingInInterceptor"/>
+        </cxf:inInterceptors>
+        <cxf:outInterceptors>
+            <ref component-id="loggingOutInterceptor"/>
+        </cxf:outInterceptors>
+        <cxf:providers>
+            <ref component-id="jacksonJsonProvider"/>
+            <ref component-id="jacksonJaxbXMLProvider"/>
+            <ref component-id="multipartProvider" />  
+            <ref component-id="crossOriginResourceSharingFilterProvider"/>
+        </cxf:providers>
+        <cxf:features>
+            <ref component-id="loggingFeature"/>             
+        </cxf:features>
+    </cxf:rsServer>
+  
+    <camelContext id="camelContext_TestService"
+        trace="true" xmlns="http://camel.apache.org/schema/blueprint">
+        
+        <!--
+		cxfrs://address?options 
+		Where address represents the CXF endpoint's address	
+					
+		cxfrs:bean:rsEndpoint	
+		Where rsEndpoint represents the Spring bean's name which represents the CXFRS client or server
+		
+		For either style above, you can append options to the URI as follows:	
+		cxfrs:bean:cxfEndpoint?resourceClasses=org.apache.camel.rs.Example 
+		-->
+        <!-- REST SERVICE -->
+        <route handleFault="true"
+            id="_routeTestServiceEndpointRouteID" streamCache="true">
+            <from id="_from1ServerTestServiceEndpointSSL" uri="cxfrs:bean:rsServerTestServiceEndpointSSL"/>
+            <log id="_log1ServerTestServiceEndpointSSL" message="Processing CXF route....operation name ${headers.operationName}"/>
+            <log id="_log2ServerTestServiceEndpointSSL" message="Processing CXF route....http method ${headers.CamelHttpMethod}"/>
+            <log id="_log3ServerTestServiceEndpointSSL" message="Processing CXF route....path is ${headers.CamelHttpPath}"/>
+            <log id="_log4ServerTestServiceEndpointSSL" message="Processing CXF route....body is ${body}"/>
+            <camel:setHeader headerName="Access-Control-Allow-Origin" id="_setHeader1TestServiceEndpointSSL">
+                <camel:constant>*</camel:constant>
+            </camel:setHeader>
+            <removeHeaders
+                id="_removeHeaders1ServerTestServiceEndpointSSL" pattern="org.apache.cxf.headers*"/>
+            <choice id="_choice1ServerTestServiceEndpointSSL">
+                <when id="_when1ServerTestServiceEndpointSSL">
+                    <simple>${header.operationName} == 'ping'</simple>
+                    <to id="_to1ServerTestServiceEndpointSSL" uri="direct:invokeTestServiceRoutePing"/>
+                </when>
+                <otherwise id="_otherwise1ServerTestServiceEndpointSSL">
+                    <log id="_log5ServerTestServiceEndpointSSL" message="#### Resource is not implemented for method ${header.CamelHttpMethod} or operation ${header.operationName}, No suitable process for $simple{headers.operationName}"/>
+                    <setHeader headerName="CamelHttpResponseCode" id="_setHeader2ServerTestServiceEndpointSSL">
+                        <constant>404</constant>
+                    </setHeader>
+                </otherwise>
+            </choice>
+            <marshal id="_marshal1ServerTestServiceEndpointSSL">
+                <json library="Jackson"/>
+            </marshal>
+        </route>
+        <route id="_routeInvokeTestServiceRoutePingRouteID">
+            <from id="_from1Ping" uri="direct:invokeTestServiceRoutePing"/>
+            <bean id="_bean1Ping" method="ping" ref="testServiceEndpointID"/>
+        </route>       
+    </camelContext>
+   
+</blueprint>

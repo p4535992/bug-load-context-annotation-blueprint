@@ -1,0 +1,1097 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+  	<groupId>org.jboss.fuse</groupId>
+    <artifactId>jboss-fuse-parent</artifactId>
+    <version>7.3.1.fuse-731003-redhat-00003</version>
+  </parent>
+  
+  <!-- bundle:install -s  mvn:bug.test/bug-load-swaggerui-blueprint/1.0.0-SNAPSHOT -->
+  <groupId>bug.test</groupId>
+  <artifactId>bug-load-context-annotation-blueprint</artifactId> 
+  <name>Bug Test Load SwaggerUI Bluerint XML</name>
+  <packaging>bundle</packaging>
+  <version>1.0.0-SNAPSHOT</version>
+  
+  <properties>
+	  	<!-- ======================= -->
+		<!-- OSGi related properties -->
+		<!-- ======================= -->
+		<osgi.activemq.version>5</osgi.activemq.version>
+		<osgi.spring.version>[3.1,5)</osgi.spring.version>
+		<osgi.spring.osgi.version>[1.2.0,2)</osgi.spring.osgi.version>
+		<osgi.slf4j.version>[1.5,2)</osgi.slf4j.version>
+		<osgi.javax.annotation.version>[1.2,2)</osgi.javax.annotation.version>
+		<osgi.javax.bind.version>[0,3)</osgi.javax.bind.version>
+		<osgi.javax.stream.version>[0,2)</osgi.javax.stream.version>
+		<osgi.javax.activation.version>[0,2)</osgi.javax.activation.version>
+		<osgi.javax.mail.version>[0,2)</osgi.javax.mail.version>
+		<osgi.javax.servlet.version>[0,4.1)</osgi.javax.servlet.version>
+		<osgi.javax.xml.ws.version>[0,3)</osgi.javax.xml.ws.version>
+		<osgi.javax.ws.rs.version>1.0</osgi.javax.ws.rs.version>
+		<osgi.javax.xml.bind.version>2.2.1</osgi.javax.xml.bind.version>
+		<osgi.commons-io.version>2.4</osgi.commons-io.version>
+		<osgi.commons-email.version>1.4</osgi.commons-email.version>
+		<osgi.httpcomponents.version>4.4.9</osgi.httpcomponents.version>
+		<osgi.commons-collections4.version>4.1</osgi.commons-collections4.version>
+		<osgi.commons-compress.version>1.16.1</osgi.commons-compress.version>
+		<osgi.commons-dbcp2.version>[2.1,3)</osgi.commons-dbcp2.version>
+		<osgi.commons-lang.version>2.6</osgi.commons-lang.version>
+		<osgi.commons-lang3.version>2.6</osgi.commons-lang3.version>
+		<osgi.commons-math3.version>3.6.1</osgi.commons-math3.version>
+		<osgi.commons-pool2.version>2.5.0</osgi.commons-pool2.version>
+		<osgi.commons-text.version>1.2</osgi.commons-text.version>
+		<osgi.commons-codec.version>1.10</osgi.commons-codec.version>
+		<osgi.commons-collections.version>3.2.2</osgi.commons-collections.version>
+		<osgi.wss4j.version>2.0.3</osgi.wss4j.version>
+		<osgi.commons-cli.version>1.4</osgi.commons-cli.version>
+		<osgi.commons-fileupload.version>1.3.3</osgi.commons-fileupload.version>
+		<osgi.cxf.version>3.1.5</osgi.cxf.version>
+		<osgi.camel.version>2</osgi.camel.version>
+		<osgi.jackson.version>2.6.3</osgi.jackson.version>
+		<osgi.bouncycastle.version>[1.5.8,2)</osgi.bouncycastle.version>
+		<osgi.xmlsec.version>2.0.10</osgi.xmlsec.version>
+		<osgi.pdfbox.version>0.0.0</osgi.pdfbox.version>	
+		<osgi.openpdf.version>1.2.7</osgi.openpdf.version>
+		<osgi.xmlsec.version>2.0.10</osgi.xmlsec.version>
+		<osgi.tika.version>1.0.0</osgi.tika.version>
+		<osgi.rxjava.version>1.3.0</osgi.rxjava.version>
+		<osgi.rxjava2.version>2.0.0</osgi.rxjava2.version>
+		<osgi.retrofit.version>2.4.0</osgi.retrofit.version>
+		<osgi.okhttp.version>3.10.0</osgi.okhttp.version>
+		<osgi.okio.version>1.14.0</osgi.okio.version>
+		<osgi.hibernate4.version>4.0.0</osgi.hibernate4.version>
+		<osgi.hibernate5.version>5.0.0</osgi.hibernate5.version>
+		<osgi.quartz.version>1.8.0</osgi.quartz.version>
+		<osgi.io.undertow.version>2</osgi.io.undertow.version>
+		<osgi.aries.version>1</osgi.aries.version>
+	
+		<!-- FUSE 7 -->
+		<fuse.pom.version>7.3.1.fuse-731003-redhat-00003</fuse.pom.version>
+		<spring-boot.version>1.5.17.RELEASE</spring-boot.version>
+		<spring.version>4.3.20.RELEASE</spring.version>
+		<spring-security.version>4.2.4.RELEASE</spring-security.version>
+		
+	    <version.org.ops4j.base>1.5.0</version.org.ops4j.base>
+	    <version.org.ops4j.pax.cdi>1.1.2</version.org.ops4j.pax.cdi>
+	    <version.org.ops4j.pax.exam>4.13.1</version.org.ops4j.pax.exam>
+	    <version.org.ops4j.pax.jdbc>1.3.4</version.org.ops4j.pax.jdbc>
+	    <version.org.ops4j.pax.jms>1.0.3</version.org.ops4j.pax.jms>
+	    <version.org.ops4j.pax.logging>1.10.1</version.org.ops4j.pax.logging>
+	    <version.org.ops4j.pax.swissbox>1.8.3</version.org.ops4j.pax.swissbox>
+	    <version.org.ops4j.pax.transx>0.4.2</version.org.ops4j.pax.transx>
+	    <version.org.ops4j.pax.url>2.6.1</version.org.ops4j.pax.url>
+	    <version.org.ops4j.pax.web>7.3.3</version.org.ops4j.pax.web>
+	        
+		<!--
+		<version.camel>2.21.0.fuse-731003-redhat-00003</version.camel>
+		<version.camel.extra>2.21.0.fuse-731003-redhat-00002</version.camel.extra>
+		<version.cxf>3.2.7.fuse-731004-redhat-00003</version.cxf>
+		<version.fabric8>3.0.11.fuse-731003-redhat-00004</version.fabric8>
+		<version.fabric8.maven.plugin>3.5.33.fuse-731003-redhat-00004</version.fabric8.maven.plugin>
+		<version.fuse-karaf>7.3.1.fuse-731003-redhat-00003</version.fuse-karaf>
+		<version.karaf>4.2.0.fuse-731003-redhat-00003</version.karaf>	
+		-->
+		
+		<version.felix.bundle-plugin>3.5.1</version.felix.bundle-plugin>
+	
+		<!-- <fuse.pom.version>7.3.0.fuse-730058-redhat-00001</fuse.pom.version> -->
+		<!-- <camel.version>2.21.0.fuse-730078-redhat-00001</camel.version> -->
+		<!-- <cxf.version>3.2.7</cxf.version> -->
+		<!-- <jackson.version>2.8.11</jackson.version> -->
+		<!-- FUSE 6/Apache ServiceMIx 7 -->
+		<!-- 
+		<fuse.pom.version>6.3.0.redhat-377</fuse.pom.version> 
+		<fabric.version>1.2.0.redhat-630267</fabric.version> 
+		<camel.version>2.17.0.redhat-630377</camel.version> 
+		<cxf.version>3.1.9</cxf.version> 
+		<karaf.version>4.0.9 </karaf.version> 
+		<activemq.version>5.14.5</activemq.version> 
+		<spring.version>3.2.18</spring.version>
+		<spring-security.version>3.2.10</spring-security.version>
+		-->
+	
+		<!-- COMMON -->
+		<camel.version>2.21.0</camel.version>
+		<cxf.version>3.2.7</cxf.version>
+		<javax.mail.version>1.4.7</javax.mail.version>
+		<jackson.version>2.8.3</jackson.version>
+		<jackson.jaxb.version>2.3.2</jackson.jaxb.version>
+		<jackson.asl.version>1.9.13</jackson.asl.version>
+		
+		<hibernate.annotations.common.version>4.0.4.Final</hibernate.annotations.common.version>
+		<hibernate42.version>4.2.22.Final-redhat-1</hibernate42.version>
+		<hibernate.validator.version>5.0.3.Final</hibernate.validator.version>
+		<hibernate5.version>5.0.3.Final</hibernate5.version>
+		
+		<org.apache.httpcomponents.httpclient.version>4.5.5</org.apache.httpcomponents.httpclient.version>
+		<org.apache.httpcomponents.httpcore.version>4.4.9</org.apache.httpcomponents.httpcore.version>
+	
+		<org.zeroturnaround.zt-zip.version>1.12</org.zeroturnaround.zt-zip.version>
+		<mysql-connector-java.version>8.0.13</mysql-connector-java.version>
+		<postgresql.version>42.2.5</postgresql.version>
+		<commons-email.version>1.5</commons-email.version>
+		<commons-beanutils.version>1.9.3</commons-beanutils.version>
+		<commons-codec.version>1.10</commons-codec.version>	
+		<!-- <commons-collections.version>3.2.2</commons-collections.version> -->
+		<commons-collections4.version>4.1</commons-collections4.version>
+		<commons-io.version>2.4</commons-io.version>
+		<commons-lang.version>2.6</commons-lang.version>
+		<commons-lang3.version>3.3.2</commons-lang3.version>
+		<commons-net.version>3.6</commons-net.version>
+		<commons-pool.version>1.6.0</commons-pool.version>
+		<commons-dbcp2.version>2.1.1</commons-dbcp2.version>
+		<commons-csv.version>20110211</commons-csv.version>
+		<xmlsec.version>2.0.10</xmlsec.version>
+		<pdfbox.version>2.0.13</pdfbox.version>
+		<openpdf.version>1.2.7</openpdf.version>
+		<bouncycastle.version>1.60</bouncycastle.version>
+		<tika.version>1.19.1</tika.version>
+		<guava.version>20.0</guava.version>
+		<com.google.zxing.version>3.1.0</com.google.zxing.version>
+		<quartz.version>2.3.0</quartz.version>
+		<io.undertow.version>2.0.15.Final</io.undertow.version>
+		<org.json.version>20190722</org.json.version>
+		<jsoup.version>1.11.3</jsoup.version>
+	
+		<kotlin-osgi-bundle.version>1.2.61</kotlin-osgi-bundle.version>
+		<juniversalchardet.version>2.3.0</juniversalchardet.version>
+		<retrofit.version>2.4.0</retrofit.version>
+		<okhttp.version>3.11.0</okhttp.version>
+		<okio.version>1.15.0</okio.version>
+		<org.apache.oltu.oauth2.client.version>1.0.1</org.apache.oltu.oauth2.client.version>
+		<gson-fire.version>1.8.3</gson-fire.version>
+		<gson.version>2.8.2</gson.version>
+		<xmlschema-core.version>2.2.3</xmlschema-core.version>
+		<javax.enterprise.cdi-api.version>2.0</javax.enterprise.cdi-api.version><!-- 1.2 -->
+		<org.apache.aries.blueprint.core.version>1.10.2</org.apache.aries.blueprint.core.version>
+	
+		<swagger.version>1.5.21</swagger.version><!-- updating to 1.5.18 will cause systest failures -->
+		<swagger.v3.version>2.0.0</swagger.v3.version>
+		<swagger-ui.version>3.13.0</swagger-ui.version><!-- 3.23.0,2.2.10-1 -->
+		
+		<!-- <com.sun.jersey.version>1.19</com.sun.jersey.version> -->
+		<jersey.version>2.27</jersey.version>
+		<org.jvnet.mimepull.version>1.9.11</org.jvnet.mimepull.version>
+		
+		<log4j2.version>2.10.0</log4j2.version>
+		<log4j.version>1.2.17</log4j.version>
+		<org.slf4j.version>1.7.22</org.slf4j.version>
+		
+		<junit.version>4.12</junit.version>
+		
+		<!-- MAVEN -->
+	        
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.javadoc.skip>true</maven.javadoc.skip>
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.build.timestamp.format>yyyyMMdd.HHmmss</maven.build.timestamp.format>
+	
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.targetEncoding>UTF-8</project.build.targetEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>	
+		<bundle.name>${project.groupId} :: ${project.artifactId} :: ${project.name}</bundle.name>
+	    <bundle.symbolicName>${project.groupId}.${project.artifactId}</bundle.symbolicName>
+		<bundle.namespace>${project.groupId}.${project.artifactId}</bundle.namespace>
+  </properties>
+  
+   <dependencyManagement>
+        <dependencies>              	  	
+        	<!-- FUSE 7 - KARAF-->   	
+			<dependency>
+				<groupId>org.jboss.redhat-fuse</groupId>
+				<artifactId>fuse-karaf-bom</artifactId>
+				<version>${fuse.pom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>			
+        </dependencies>
+    </dependencyManagement>
+  
+  <dependencies>
+
+    <!-- ========================== -->
+	<!-- EXTERNAL DEPENDENCY        -->
+	<!-- ========================== -->
+	   
+    <!-- bundle:install -s  mvn:com.google.guava/guava/20.0 -->
+    <dependency>
+	    <groupId>com.google.guava</groupId>
+	    <artifactId>guava</artifactId>	    
+	    <scope>provided</scope>
+	</dependency>
+	
+	<!-- bundle:install -s wrap:mvn:com.google.zxing/core/3.1.0 -->
+	<dependency>
+    	<groupId>com.google.zxing</groupId>
+    	<artifactId>javase</artifactId>
+    	<scope>provided</scope>
+    	<version>${com.google.zxing.version}</version>
+    </dependency>
+	
+	<!-- bundle:install -s mvn:mysql/mysql-connector-java/8.0.13 -->
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>${mysql-connector-java.version}</version>
+		<scope>provided</scope>  
+	</dependency>
+	
+	<!-- bundle:install -s mvn:org.postgresql/postgresql/42.2.5 -->
+	<dependency>
+		<groupId>org.postgresql</groupId>
+		<artifactId>postgresql</artifactId>
+		<scope>provided</scope>
+		<version>${postgresql.version}</version>
+	</dependency>
+	
+	<!-- bundle:install -s mvn:org.apache.commons/commons-email/1.5 -->
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-email</artifactId>
+		<scope>provided</scope>
+		<version>${commons-email.version}</version>
+	</dependency>
+	
+	<!-- bundle:install -s mvn:commons-io/commons-io/2.5 -->
+	<dependency>
+		<groupId>commons-io</groupId>
+		<artifactId>commons-io</artifactId>
+		<scope>provided</scope>
+		<version>${commons-io.version}</version>
+	</dependency>
+	
+	<!-- bundle:install -s mvn:org.apache.commons/commons-lang3/3.8 -->
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-lang3</artifactId>
+		<scope>provided</scope>
+	</dependency>
+
+	<!-- bundle:install -s mvn:commons-collections/commons-collections/3.2.2 -->
+	<!-- 
+	<dependency>
+		<groupId>commons-collections</groupId>
+		<artifactId>commons-collections</artifactId>
+		<version>${commons-collections.version}</version>
+		<scope>provided</scope>
+	</dependency>
+	-->
+	<!-- bundle:install -s mvn:org.apache.commons/commons-collections4/4.1 -->
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-collections4</artifactId>
+		<scope>provided</scope>
+		<version>${commons-collections4.version}</version>
+	</dependency>
+			
+	<!-- bundle:install -s mvn:org.zeroturnaround/zt-zip/1.12 -->
+	<dependency>
+		<groupId>org.zeroturnaround</groupId>
+		<artifactId>zt-zip</artifactId>
+		<exclusions>
+			<exclusion>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+			</exclusion>
+		</exclusions>
+		<scope>provided</scope>
+		<version>${org.zeroturnaround.zt-zip.version}</version>
+	</dependency>
+	
+	<!-- =============================== -->
+	<!-- XML UTILITIES -->
+	<!-- =============================== -->
+	<!-- feature:install camel-xmlsecurity -->
+	<dependency>
+		<groupId>org.apache.santuario</groupId>
+		<artifactId>xmlsec</artifactId>
+		<scope>provided</scope>
+		<version>${xmlsec.version}</version>
+	</dependency>			
+	
+	<!-- =============================== -->
+	<!-- PDF BOX  -->
+	<!-- =============================== -->
+	<!-- bundle:install -s mvn:org.apache.pdfbox/pdfbox/2.0.13 -->
+	<dependency>
+		<groupId>org.apache.pdfbox</groupId>
+		<artifactId>pdfbox</artifactId>
+		<scope>provided</scope>
+		<version>${pdfbox.version}</version>
+	</dependency>
+	<!-- bundle:install -s mvn:org.apache.pdfbox/fontbox/2.0.13 -->
+	<dependency>
+		<groupId>org.apache.pdfbox</groupId>
+		<artifactId>fontbox</artifactId>
+		<scope>provided</scope>
+		<version>${pdfbox.version}</version>
+	</dependency>
+	<!-- bundle:install -s mvn:org.apache.pdfbox/xmpbox/2.0.13 -->
+	<dependency>
+		<groupId>org.apache.pdfbox</groupId>
+		<artifactId>xmpbox</artifactId>
+		<scope>provided</scope>
+		<version>${pdfbox.version}</version>
+	</dependency>
+	<!-- bundle:install -s mvn:org.apache.pdfbox/preflight/2.0.13 -->
+	<dependency>
+		<groupId>org.apache.pdfbox</groupId>
+		<artifactId>preflight</artifactId>
+		<scope>provided</scope>
+		<version>${pdfbox.version}</version>
+	</dependency>
+	<!-- bundle:install -s wrap:mvn:org.apache.pdfbox/pdfbox-examples/2.0.13 -->
+	<dependency>
+	    <groupId>org.apache.pdfbox</groupId>
+	    <artifactId>pdfbox-examples</artifactId>
+		<scope>provided</scope>
+		<version>${pdfbox.version}</version>
+	</dependency>
+	<!-- bundle:install -s wrap:mvn:org.apache.pdfbox/pdfbox-examples/2.0.13 -->
+	<dependency>
+	    <groupId>org.apache.pdfbox</groupId>
+	    <artifactId>pdfbox-tools</artifactId>
+		<scope>provided</scope>
+		<version>${pdfbox.version}</version>
+	</dependency>	
+	<!-- =============================== -->
+	<!-- OPENPDF -->
+	<!-- =============================== -->
+	
+	<!-- bundle:install -s mvn:com.github.librepdf/openpdf/1.2.7 -->
+	<dependency>
+		<groupId>com.github.librepdf</groupId>
+		<artifactId>openpdf</artifactId>
+		<scope>provided</scope>
+		<version>${openpdf.version}</version>
+	</dependency>
+	<!-- bundle:install -s wrap:mvn:com.github.albfernandez/juniversalchardet/2.3.0 -->
+	<dependency>
+		<groupId>com.github.albfernandez</groupId>
+		<artifactId>juniversalchardet</artifactId>
+		<scope>provided</scope>
+		<version>${juniversalchardet.version}</version>
+	</dependency>
+					
+	<!-- =================================== -->
+	<!-- BOUNCYCASTLE -->
+	<!-- =================================== -->
+	
+	<!-- bundle:install -s  mvn:org.bouncycastle/bcprov-jdk15on/1.60 -->
+	<dependency>
+		<groupId>org.bouncycastle</groupId>
+		<artifactId>bcprov-jdk15on</artifactId>
+		<scope>provided</scope>
+		<version>${bouncycastle.version}</version>
+	</dependency>
+
+	<!-- bundle:install -s  mvn:org.bouncycastle/bcpkix-jdk15on/1.60 -->
+	<dependency>
+		<groupId>org.bouncycastle</groupId>
+		<artifactId>bcpkix-jdk15on</artifactId>
+		<scope>provided</scope>
+		<version>${bouncycastle.version}</version>
+	</dependency>
+
+	<!-- bundle:install -s  mvn:org.bouncycastle/bcpg-jdk15on/1.60 -->
+	<dependency>
+		<groupId>org.bouncycastle</groupId>
+		<artifactId>bcpg-jdk15on</artifactId>
+		<scope>provided</scope>
+		<version>${bouncycastle.version}</version>
+	</dependency> 
+	
+	<!-- =================== -->
+	<!-- SWAGGER -->
+	<!-- =================== -->
+    <dependency>
+        <groupId>io.swagger</groupId>
+        <artifactId>swagger-annotations</artifactId>
+        <version>${swagger.version}</version>
+        <scope>provided</scope>
+    </dependency>
+    <dependency>
+        <groupId>io.swagger</groupId>
+        <artifactId>swagger-models</artifactId>
+        <version>${swagger.version}</version>
+        <scope>provided</scope>
+    </dependency>
+    <dependency>
+        <groupId>io.swagger</groupId>
+        <artifactId>swagger-core</artifactId>
+        <version>${swagger.version}</version>
+        <scope>provided</scope>
+    </dependency>
+    <dependency>
+        <groupId>io.swagger</groupId>
+        <artifactId>swagger-jaxrs</artifactId>
+        <version>${swagger.version}</version>
+        <scope>provided</scope>
+    </dependency>
+          
+	<dependency>
+	    <groupId>io.swagger.core.v3</groupId>
+	    <artifactId>swagger-jaxrs2</artifactId>
+	    <version>${swagger.v3.version}</version>
+	    <scope>provided</scope>
+	</dependency>
+    <dependency>
+        <groupId>io.swagger.core.v3</groupId>
+        <artifactId>swagger-jaxrs2-servlet-initializer</artifactId>
+        <version>${swagger.v3.version}</version>
+        <scope>provided</scope>
+    </dependency>
+	<dependency>
+        <groupId>io.swagger.core.v3</groupId>
+        <artifactId>swagger-annotations</artifactId>
+        <version>${swagger.v3.version}</version>
+        <scope>provided</scope>
+    </dependency>
+	<dependency>
+		<groupId>jakarta.ws.rs</groupId>
+		<artifactId>jakarta.ws.rs-api</artifactId>
+		<version>2.1.5</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.webjars</groupId>
+	    <artifactId>swagger-ui</artifactId>
+	    <version>3.13.0</version>
+	</dependency>
+	<!-- ===================== -->
+	<!-- JBOSS FUSE 7 EXTRA    -->
+	<!-- ===================== -->
+	
+	<!-- SPRING -->
+	
+	<!-- bundle:install -s mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.spring-security-core/4.2.4.RELEASE_1 -->
+
+	<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-config</artifactId>
+		<scope>provided</scope>
+	</dependency>		
+	<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-core</artifactId>
+		<scope>provided</scope>
+	</dependency>
+
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-orm</artifactId>
+		<scope>provided</scope>
+	</dependency>
+
+	<!-- ================================ -->
+	<!-- TIKA -->
+	<!-- ================================ -->
+	<dependency>
+	   <groupId>org.apache.tika</groupId>
+	   <artifactId>tika-core</artifactId>
+	   <scope>provided</scope>
+	</dependency>
+	<dependency>
+	   <groupId>org.apache.tika</groupId>
+	   <artifactId>tika-parsers</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+	   <groupId>org.apache.tika</groupId>
+	   <artifactId>tika-serialization</artifactId>
+		<scope>provided</scope>
+		<version>${tika.version}</version>
+	</dependency>
+	
+	<!-- Provided dependencies -->
+
+	<dependency>
+		<groupId>commons-codec</groupId>
+		<artifactId>commons-codec</artifactId>
+		<scope>provided</scope>
+	</dependency>
+
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpcore</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<!--		
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpmime</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	-->
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpclient</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	
+    <!-- =============================== -->
+	<!-- JERSEY 2 		 -->
+	<!-- =============================== -->	
+	<!-- bundle:install -s mvn:org.jvnet.mimepull/mimepull/1.9.11 -->
+	<dependency>
+	    <groupId>org.jvnet.mimepull</groupId>
+	    <artifactId>mimepull</artifactId>
+	    <version>${org.jvnet.mimepull.version}</version>
+	    <scope>provided</scope>
+	</dependency>
+	<!-- bundle:install -s mvn:org.glassfish.hk2.external/javax.inject/2.4.0 -->
+	<dependency>
+	    <groupId>org.glassfish.hk2.external</groupId>
+	    <artifactId>javax.inject</artifactId>
+	    <version>2.4.0</version>
+	    <scope>provided</scope>
+	</dependency>
+	<!-- bundle:install -s mvn:org.glassfish.hk2/osgi-resource-locator/1.0.3 -->
+	<dependency>
+	    <groupId>org.glassfish.hk2</groupId>
+	    <artifactId>osgi-resource-locator</artifactId>
+	    <version>1.0.3</version>
+	    <scope>provided</scope>
+	</dependency>
+	<!-- bundle:install -s mvn:org.glassfish.hk2/hk2-utils/2.5.0 -->
+	<dependency>
+	    <groupId>org.glassfish.hk2</groupId>
+	    <artifactId>hk2-utils</artifactId>
+	    <version>2.5.0</version>
+	    <scope>provided</scope>
+	</dependency>
+	<!-- bundle:install -s mvn:org.glassfish.hk2/hk2-api/2.5.0 -->  
+	<dependency>
+	    <groupId>org.glassfish.hk2</groupId>
+	    <artifactId>hk2-api</artifactId>
+	    <version>2.5.0</version>
+	    <scope>provided</scope>
+	</dependency>
+          <!-- bundle:install -s mvn:org.glassfish.jersey.inject/jersey-hk2/2.27 -->   
+          <!--        
+          <dependency>
+              <groupId>org.glassfish.jersey.inject</groupId>
+              <artifactId>jersey-hk2</artifactId>
+              <version>${jersey.version}</version>
+              <scope>provided</scope>
+          </dependency>		
+          -->	
+	<!-- bundle:install -s mvn:org.glassfish.jersey.core/jersey-common/2.27 -->
+	<dependency>
+	    <groupId>org.glassfish.jersey.core</groupId>
+	    <artifactId>jersey-common</artifactId>
+	    <version>${jersey.version}</version>
+	    <scope>provided</scope>
+	</dependency>
+	<!-- bundle:install -s mvn:org.glassfish.jersey.core/jersey-client/2.27 -->
+	<dependency>
+		<groupId>org.glassfish.jersey.core</groupId>
+		<artifactId>jersey-client</artifactId>
+		<version>${jersey.version}</version>
+		<scope>provided</scope>
+	</dependency>
+	<!-- bundle:install -s mvn:org.glassfish.jersey.core/jersey-server/2.27 -->
+	<dependency>
+		<groupId>org.glassfish.jersey.core</groupId>
+		<artifactId>jersey-server</artifactId>
+		<version>${jersey.version}</version>
+		<scope>provided</scope>
+	</dependency>
+	<!-- bundle:install -s mvn:org.glassfish.jersey.ext/jersey-entity-filtering/2.27 -->
+	<dependency>
+	    <groupId>org.glassfish.jersey.ext</groupId>
+	    <artifactId>jersey-entity-filtering</artifactId>
+	    <version>${jersey.version}</version>
+	    <scope>provided</scope>
+	</dependency>
+	<!-- bundle:install -s mvn:org.glassfish.jersey.media/jersey-media-multipart/2.27 -->
+	<dependency>
+		<groupId>org.glassfish.jersey.media</groupId>
+		<artifactId>jersey-media-multipart</artifactId>
+		<version>${jersey.version}</version>
+		<scope>provided</scope>
+	</dependency>
+    <!-- bundle:install -s mvn:rg.glassfish.jersey.media/jersey-media-json-jackson/2.27 -->
+    <dependency>
+        <groupId>org.glassfish.jersey.media</groupId>
+        <artifactId>jersey-media-json-jackson</artifactId>
+        <version>${jersey.version}</version>
+        <scope>provided</scope>
+    </dependency>  
+	<!-- bundle:install -s mvn:org.glassfish.jersey.containers/jersey-container-servlet/2.27 -->
+	<!--			  
+          <dependency>
+              <groupId>org.glassfish.jersey.containers</groupId>
+              <artifactId>jersey-container-servlet</artifactId>
+              <version>${jersey.version}</version>
+              <scope>provided</scope>
+          </dependency>
+	-->  	
+
+   <!-- ================================ -->
+   <!-- APACHE CXF -->
+   <!-- ================================ -->
+   	<dependency>
+		<groupId>org.apache.cxf</groupId>
+		<artifactId>cxf-rt-rs-service-description-swagger</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.cxf</groupId>
+		<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.cxf</groupId>
+		<artifactId>cxf-rt-transports-http-jetty</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.cxf</groupId>
+		<artifactId>cxf-rt-rs-service-description</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.cxf</groupId>
+		<artifactId>cxf-rt-ws-security</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.cxf</groupId>
+		<artifactId>cxf-rt-frontend-jaxws</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.cxf</groupId>
+	    <artifactId>cxf-rt-rs-service-description-openapi-v3</artifactId>
+	    <scope>provided</scope>
+	</dependency>
+		 
+    <!-- ================================ -->
+    <!-- APACHE CAMEL -->
+    <!-- ================================ -->
+    <dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-swagger</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-swagger-java</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-servlet</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-jetty9</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-spring</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-spring-javaconfig</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-freemarker</artifactId>		
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-jackson</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-sql</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-cxf</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-jaxb</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-http4</artifactId>
+		<scope>provided</scope>
+	</dependency>  
+    <dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-blueprint</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-undertow</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-http-common</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	
+	<!-- ==================== -->
+	<!-- QUARTZ -->
+	<!-- ==================== -->
+	<dependency>
+	    <groupId>org.quartz-scheduler</groupId>
+	    <artifactId>quartz</artifactId>	    
+	    <scope>provided</scope>
+	    <version>${quartz.version}</version>
+	</dependency>
+	<!-- ==================== -->
+	<!-- UNDERTOW -->
+	<!-- ==================== -->
+	<dependency>
+	    <groupId>io.undertow</groupId>
+	    <artifactId>undertow-servlet</artifactId>
+	    <scope>provided</scope>
+	</dependency>
+
+	<!-- ==================== -->
+	<!-- Logging dependencies -->
+	<!-- ==================== -->
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-api</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>jcl-over-slf4j</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>jul-to-slf4j</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-log4j12</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-nop</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<scope>provided</scope>
+	</dependency>
+  </dependencies>
+  
+  <build>
+	    <defaultGoal>deploy</defaultGoal>
+	    
+	    <pluginManagement>
+	    
+	    	<plugins>
+		        <!-- To define the plugin version in your parent POM -->
+		    	<!-- https://www.mail-archive.com/issues@maven.apache.org/msg137980.html -->
+		        <plugin>
+		          <groupId>org.apache.maven.plugins</groupId>
+		          <artifactId>maven-install-plugin</artifactId>
+		          <version>2.5.2</version><!-- 3.0.0-M1 -->
+		        </plugin>
+		        <plugin>
+		            <groupId>org.apache.maven.plugins</groupId>
+				    <artifactId>maven-deploy-plugin</artifactId>
+				    <version>3.0.0-M1</version><!-- 3.0.0-M1 -->
+		        </plugin>
+		        <plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.3</version>
+					<configuration>
+						<goals>deploy</goals>
+						<tagNameFormat>@{project.version}</tagNameFormat>
+						<arguments>-Dmaven.javadoc.skip=true -Dmaven.test.skipTests=true
+							-Dmaven.test.skip=true</arguments>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.5.1</version>
+					<configuration>
+						<source>${maven.compiler.source}</source>
+						<target>${maven.compiler.target}</target>
+						<encoding>${project.build.targetEncoding}</encoding>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.1.0</version>
+					<configuration>
+						<encoding>${project.build.targetEncoding}</encoding>
+				          <resources>
+			                <resource>
+			                  <directory>src/main/resources</directory>
+			                  <includes>
+			                    <include>**/*</include>
+			                  </includes>
+			                  <filtering>true</filtering>
+			                </resource>
+			              </resources>
+			              <nonFilteredFileExtensions>
+			                <nonFilteredFileExtension>ftl</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>acp</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>jpg</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>png</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>gif</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>svg</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>pdf</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>doc</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>docx</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>xls</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>xlsx</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>ppt</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>pptx</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>bin</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>lic</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>swf</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>zip</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>msg</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>jar</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>eot</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>css</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>ico</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>jks</nonFilteredFileExtension>
+			                <nonFilteredFileExtension>p12</nonFilteredFileExtension>
+			              </nonFilteredFileExtensions>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<!-- <version>2.5.2</version> -->
+				</plugin>
+	    		<plugin>
+			      <artifactId>maven-enforcer-plugin</artifactId>
+			      <configuration>
+			        <skip>true</skip>
+			      </configuration>
+			    </plugin>
+	    	</plugins>
+	    </pluginManagement>
+	    
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+					<encoding>${project.build.targetEncoding}</encoding>
+				</configuration>
+			</plugin>			
+		    <plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>${version.felix.bundle-plugin}</version>
+				<extensions>true</extensions>  
+				<executions>
+					<execution>
+						<id>bundle-manifest</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>manifest</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<instructions>
+	                    <supportedProjectTypes>
+	                        <supportedProjectType>jar</supportedProjectType>
+	                        <supportedProjectType>bundle</supportedProjectType>
+	                        <supportedProjectType>war</supportedProjectType>
+	                    </supportedProjectTypes>
+						<Bundle-SymbolicName>${bundle.symbolicName}</Bundle-SymbolicName>
+						<Bundle-Name>${bundle.name}</Bundle-Name>
+						<Bundle-Version>${project.version}</Bundle-Version>
+						<Bundle-Description>${project.description}</Bundle-Description>
+						<!-- 
+						<Bundle-ClassPath>
+							.,
+							WEB-INF/classes,
+							{maven-resources},
+							{maven-dependencies}
+						</Bundle-ClassPath>
+						-->
+						<wrapImportPackage>;</wrapImportPackage>
+						<!-- https://gist.github.com/kjellski/4337275 -->
+						<!-- <Include-Resource>{maven-resources}, {maven-dependencies}</Include-Resource> -->
+						<!-- Normally the plugin only checks direct dependencies, but this can 
+							be changed to include the complete set of transitive dependencies with the 
+							following option: -->						
+						<supportIncrementalBuild>true</supportIncrementalBuild>
+						<_noee>true</_noee>
+						<!--  
+	                    <_removeheaders>
+                            Private-Package,
+                            Include-Resource,
+                            Embed-Dependency,
+                            Embed-Transitive
+                        </_removeheaders>
+                        -->
+						<!-- Enable processing of OSGI DS component annotations -->
+						<!-- <_dsannotations>*</_dsannotations> -->
+						<!-- <_dsannotations-options>norequirements</_dsannotations-options> -->
+						<!-- Enable processing of OSGI metatype annotations -->
+						<!--<_metatypeannotations>*</_metatypeannotations> -->
+						<!-- <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy> 
+							<_removeheaders>Ignore-Package,Include-Resource,Private-Package,Embed-Dependency</_removeheaders> -->
+						<!-- embed all compile and runtime scope dependencies -->
+						<!-- <Embed-Dependency>*;scope=compile|runtime;inline=true;artifactId=!org.apache.felix.*|org.livingplace.*|org.osgi.*</Embed-Dependency> -->
+						<!-- <Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency> -->
+						<Embed-Dependency>*;scope=compile|runtime|system;artifactId=!slf4j*|spring*|camel*|commons-logging*|jaxb*|logback*</Embed-Dependency><!-- |swagger* -->
+						<shade.phase>package</shade.phase>
+						<Embed-Transitive>true</Embed-Transitive>
+						<!-- <Private-Package>com.github.camel.blueprint.*</Private-Package> -->
+						<Include-Resource>
+							{maven-resources},
+							{maven-dependencies}
+						</Include-Resource>					
+						<Export-Package>
+						</Export-Package>
+						<Import-Package>
+							<!-- DIPENDENZE SERVICEMIX -->
+							
+							META-INF.cxf,
+							org.apache.cxf;version="${osgi.cxf.version}",
+							org.apache.cxf.*;version="${osgi.cxf.version}",
+							org.apache.camel;version="${osgi.camel.version}",
+							org.apache.camel.*;version="${osgi.camel.version}",
+							com.fasterxml.jackson.*;version="${osgi.jackson.version}",
+							org.apache.tika.*;version="${osgi.tika.version}",
+							org.springframework.*;version="${osgi.spring.version}",
+							org.apache.wss4j.*;version="${osgi.wss4j.version}",
+							org.apache.activemq.*;version="${osgi.activemq.version}",
+
+							<!-- DIPENDENZE ESTERNE -->
+							com.google.zxing.*,
+							
+							org.slf4j;version="${osgi.slf4j.version}",
+							org.slf4j.*;version="${osgi.slf4j.version}",
+							
+							org.apache.commons.mail;version="${osgi.commons-email.version}",
+							org.apache.commons.mail.*;version="${osgi.commons-email.version}",
+
+							org.apache.commons.io;version="${osgi.commons-io.version}",
+							org.apache.commons.io.*;version="${osgi.commons-io.version}",
+
+							org.apache.commons.lang3;version="${osgi.commons-lang3.version}",
+							org.apache.commons.lang3.*;version="${osgi.commons-lang3.version}",
+							<!--
+							org.apache.commons.lang;version="${osgi.commons-lang.version}",
+							org.apache.commons.lang.*;version="${osgi.commons-lang.version}",
+							-->
+							org.apache.commons.codec;version="${osgi.commons-codec.version}",
+							org.apache.commons.codec.*;version="${osgi.commons-codec.version}",
+							 
+							org.apache.commons.collections4;version="${osgi.commons-collections4.version}",
+							org.apache.commons.collections4.*;version="${osgi.commons-collections4.version}",
+							
+							org.apache.commons.dbcp2;version="${osgi.commons-dbcp2.version}",
+							org.apache.commons.dbcp2.*;version="${osgi.commons-dbcp2.version}",
+							
+							org.bouncycastle;version="${osgi.bouncycastle.version}",
+							org.bouncycastle.*;version="${osgi.bouncycastle.version}",
+							 
+							com.mysql.cj,
+							com.mysql.cj.*,
+							
+							org.postgresql,
+							org.postgresql.*,
+
+							<!-- org.apache.http;version="${osgi.httpcomponents.version}", -->
+							org.apache.http.*;version="${osgi.httpcomponents.version}",
+
+							com.lowagie.*;version="${osgi.openpdf.version}",
+							
+							org.apache.pdfbox.*;version="${osgi.pdfbox.version}",
+
+							org.apache.camel.component.xmlsecurity;version="${osgi.xmlsec.version}",
+							org.apache.camel.component.xmlsecurity.*;version="${osgi.xmlsec.version}",
+							
+							org.hibernate,
+							org.hibernate.*,
+							org.quartz.*;version="${osgi.quartz.version}",
+							
+							org.osgi.*,
+							
+							io.swagger.*,
+							io.swagger.v3.*,
+							
+							org.glassfish.jersey.*,
+							
+							<!-- DIPENDENZE JRE -->
+							com.sun.mail.*,
+							javax.annotation;version="${osgi.javax.annotation.version}",
+							javax.activation.*;version="${osgi.javax.activation.version}",
+							javax.crypto,
+							javax.crypto.*,
+							javax.mail;version="${osgi.javax.mail.version}",
+							javax.mail.*;version="${osgi.javax.mail.version}",
+							javax.net.*,
+							javax.ws.rs;version="${osgi.javax.ws.rs.version}",
+							javax.ws.rs.*;version="${osgi.javax.ws.rs.version}",
+							javax.security.*,
+							javax.servlet.*;version="${osgi.javax.servlet.version}",
+							javax.sql,
+							javax.sql.*,
+							javax.swing,
+							javax.swing.*,
+							javax.transaction.*,
+							javax.xml.bind;version="${osgi.javax.xml.bind.version}",
+							javax.xml.bind.*;version="${osgi.javax.xml.bind.version}",
+							javax.xml.*,
+							org.w3c.*,						
+						</Import-Package>
+					</instructions>
+				</configuration>
+			</plugin>
+    </plugins>
+  </build>
+	<!--
+    <pluginRepositories>   
+    	<pluginRepository>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+			<enabled>true</enabled>
+		  </snapshots>
+          <id>io-swagger-codegen-v3-snapshot</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </pluginRepository>   
+    </pluginRepositories>
+	-->
+
+</project>
