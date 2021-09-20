@@ -144,7 +144,7 @@
 		<commons-pool.version>1.6.0</commons-pool.version>
 		<commons-dbcp2.version>2.1.1</commons-dbcp2.version>
 		<commons-csv.version>20110211</commons-csv.version>
-		<xmlsec.version>2.0.10</xmlsec.version>
+		<xmlsec.version>2.1.7</xmlsec.version>
 		<pdfbox.version>2.0.13</pdfbox.version>
 		<openpdf.version>1.2.7</openpdf.version>
 		<bouncycastle.version>1.60</bouncycastle.version>
