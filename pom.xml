@@ -131,7 +131,7 @@
 	
 		<org.zeroturnaround.zt-zip.version>1.12</org.zeroturnaround.zt-zip.version>
 		<mysql-connector-java.version>8.0.13</mysql-connector-java.version>
-		<postgresql.version>42.2.5</postgresql.version>
+		<postgresql.version>42.2.25</postgresql.version>
 		<commons-email.version>1.5</commons-email.version>
 		<commons-beanutils.version>1.9.3</commons-beanutils.version>
 		<commons-codec.version>1.10</commons-codec.version>	
